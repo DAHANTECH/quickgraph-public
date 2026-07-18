@@ -1,14 +1,15 @@
 {
-  "name": "quickgraph-web",
+  "name": "quickgraph-public",
   "private": true,
   "version": "0.1.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "typegen": "openapi-typescript \"${VITE_QUICKGRAPH_OPENAPI_URL:-http://127.0.0.1:8011/openapi.json}\" -o src/lib/api-types.ts",
     "typecheck": "tsc -b",
-    "test": "vitest run",
-    "build": "tsc -b && vite build",
+    "test": "vitest run src/adapters/browser/public-distribution.test.ts src/components/DataCenterDialog.public.test.tsx src/components/OnboardingTour.test.tsx",
+    "scan": "node scripts/check_public_source_snapshot.mjs .",
+    "scan:dist": "node scripts/check_public_source_snapshot.mjs dist --release",
+    "build": "npm run typecheck && npm run test && npm run scan && vite build && npm run scan:dist",
     "preview": "vite preview"
   },
   "dependencies": {

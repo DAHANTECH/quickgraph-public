@@ -1,9 +1,12 @@
-import snapshot from "./public-catalog.json";
-import apps from "./public-apps.json";
-import type { AppCatalogMetadata, CatalogItem } from "../domain";
-
-export const PUBLIC_CATALOG_ITEMS = snapshot.items as CatalogItem[];
-export const PUBLIC_CATALOG_SNAPSHOT_AT = snapshot.snapshotAt;
-export const PUBLIC_CATALOG_POLICY = snapshot.policy;
-export const PUBLIC_CATALOG_SUMMARY = snapshot.summary;
-export const PUBLIC_CATALOG_APPS = apps as AppCatalogMetadata[];
+export {
+  DISTRIBUTION_APP_GALLERY_FILES,
+  DISTRIBUTION_BROWSER_DATA_MODES,
+  DISTRIBUTION_COMPACT_CATEGORY_LABELS,
+  DISTRIBUTION_DEMO_ITEMS,
+  DISTRIBUTION_SUPPORTS_DEMO,
+  PUBLIC_CATALOG_APPS,
+  PUBLIC_CATALOG_ITEMS,
+  PUBLIC_CATALOG_POLICY,
+  PUBLIC_CATALOG_SNAPSHOT_AT,
+  PUBLIC_CATALOG_SUMMARY,
+} from "../distribution/public";

@@ -1,4 +1,5 @@
 import type { BrowserDataMode } from "../domain";
+import { DISTRIBUTION_BROWSER_DATA_MODES } from "../data/public-catalog";
 
 export type ThemePreference = "dark" | "light";
 export type CatalogViewPreference = "grid" | "list";
@@ -110,7 +111,7 @@ export function writeExpandedSidebarAreas(areas: ReadonlySet<string>): void {
 export function readDataMode(): BrowserDataMode {
   return readPreference(
     KEYS.dataMode,
-    ["quickgraph", "demo", "own", "virgin"],
+    DISTRIBUTION_BROWSER_DATA_MODES,
     "quickgraph",
   );
 }

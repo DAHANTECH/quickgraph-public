@@ -1,11 +1,7 @@
 import type { BrowserDataMode, CatalogItem } from "../../domain";
+import { DISTRIBUTION_BROWSER_DATA_MODES } from "../../data/public-catalog";
 
-export const BROWSER_DATA_MODES: readonly BrowserDataMode[] = [
-  "quickgraph",
-  "demo",
-  "own",
-  "virgin",
-];
+export const BROWSER_DATA_MODES: readonly BrowserDataMode[] = DISTRIBUTION_BROWSER_DATA_MODES;
 
 export function filterItemsByDataMode(
   items: readonly CatalogItem[],

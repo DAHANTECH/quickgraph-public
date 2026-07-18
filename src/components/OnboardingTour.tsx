@@ -18,6 +18,7 @@ import {
   ShieldCheck,
   X,
 } from "lucide-react";
+import { DISTRIBUTION_SUPPORTS_DEMO } from "../data/public-catalog";
 import "./OnboardingTour.css";
 
 interface OnboardingTourProps {
@@ -69,6 +70,9 @@ interface TourPosition {
 const EDGE_GAP = 12;
 const POPOVER_GAP = 16;
 const SPOTLIGHT_GAP = 8;
+const BROWSER_DATA_MODE_SUMMARY = DISTRIBUTION_SUPPORTS_DEMO
+  ? "QuickGraph, Eigene Inhalte, Demo und Virgin"
+  : "QuickGraph, Eigene Inhalte und Virgin";
 
 const START_STEPS: TourStep[] = [
   { id: "catalog", anchors: ["catalog", "brand"], icon: LayoutGrid, title: "Katalog", detail: "Der Katalog bündelt Skills, Prompts, MCP-Server, Regeln, Apps und Workflows an einem Ort." },
@@ -94,11 +98,11 @@ const END_STEPS: TourStep[] = [
 function stepsFor(profile: OnboardingTourProps["profile"]): TourStep[] {
   const dataSteps: TourStep[] = profile === "browser" ? [
     { id: "data-center", anchors: ["data-center-dialog", "data-center"], icon: Database, title: "Data Center", detail: "Im Data Center werden Datenmodus, explizite Importe, Exporte und lokale Wartung getrennt verwaltet." },
-    { id: "data-modes", anchors: ["data-modes"], icon: List, title: "Datenmodi", detail: "QuickGraph, Eigene Inhalte, Demo und Virgin ändern nur die sichtbare Auswahl. Gespeicherte Browserdaten bleiben bestehen." },
+    { id: "data-modes", anchors: ["data-modes"], icon: List, title: "Datenmodi", detail: `${BROWSER_DATA_MODE_SUMMARY} ändern nur die sichtbare Auswahl. Gespeicherte Browserdaten bleiben bestehen.` },
     { id: "imports", anchors: ["imports"], icon: FolderInput, title: "Importe", detail: "Markdown, Katalog-JSON und App-Manifeste werden nur nach deiner Dateiauswahl browserlokal eingelesen." },
   ] : [
     { id: "data-center", anchors: ["data-center-dialog", "data-center"], icon: Database, title: "Data Center", detail: "Hier wechselst du zwischen privater LocalAPI und Browsermodi, öffnest Kontextampeln und exportierst deinen bereinigten Katalog." },
-    { id: "data-modes", anchors: ["data-modes"], icon: List, title: "Datenquelle und Modus", detail: "LocalAPI lädt erlaubte lokale Quellen automatisch. QuickGraph, Eigene Daten, Demo und Virgin laufen getrennt im Browserprofil." },
+    { id: "data-modes", anchors: ["data-modes"], icon: List, title: "Datenquelle und Modus", detail: `LocalAPI lädt erlaubte lokale Quellen automatisch. ${BROWSER_DATA_MODE_SUMMARY} laufen getrennt im Browserprofil.` },
     { id: "local-catalog-export", anchors: ["local-catalog-export", "data-center-dialog"], icon: FolderInput, title: "Katalog exportieren", detail: "Exportiere einen bereinigten persönlichen Katalog ohne Dateipfade, Kontextdateien oder Session-Inhalte für das Browser-Profil." },
   ];
   return [...START_STEPS, ...dataSteps, ...END_STEPS];

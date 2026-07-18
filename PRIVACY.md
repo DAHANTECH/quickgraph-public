@@ -1,17 +1,16 @@
 # Datenschutz
 
-QuickGraph Public verarbeitet importierte Dateien vollständig im Browser.
+QuickGraph Public verarbeitet bewusst ausgewählte Importdateien vollständig im Browser.
 
-Der mitgelieferte Katalog enthält ausschließlich neutrale QuickGraph-Beispiele. Persönliche oder lokal installierte Skills werden nur nach einer bewussten Auswahl des Nutzers im eigenen Browser eingelesen.
+Der mitgelieferte Katalog enthält exakt acht neutrale Starter-Skills. Nicht enthalten sind lokale oder private Skills, Apps, Profile, Dateipfade, Nutzungsdaten, Kontextdateien, Provenance-Daten und private Screenshots.
 
-- Kein Konto und keine Anmeldung
-- Keine Datenbank und kein Upload-Endpunkt
-- Keine Analytics oder Telemetrie
-- Speicherung im lokalen Speicher des aktuellen Browsers
-- API-Schlüssel werden nicht abgefragt
-- erkannte Schlüssel- und Tokenmuster werden vor der Speicherung durch `[REDACTED]` ersetzt
-- OpenRouter wird nur für die öffentliche Modellliste kontaktiert
+- kein Konto und keine Anmeldung
+- keine serverseitige Datenbank und kein Upload-Endpunkt
+- keine Analytics oder Telemetrie
+- lokale Speicherung in IndexedDB des aktuellen Browsers
+- keine Abfrage von API-Schlüsseln
+- OpenRouter wird nur für die öffentliche Modellliste verwendet
 
-Die App legt vor einer bestätigten Kontextoptimierung eine lokale Browser-Sicherung an. Importierte oder kopierte Inhalte können persönliche Daten enthalten und sollten vor einer Veröffentlichung geprüft werden.
+Importierte oder eingegebene Inhalte können persönliche Daten enthalten. Sie bleiben lokal im Browser, sollten aber vor einem eigenen Export oder einer eigenen Veröffentlichung geprüft werden.
 
-"Lokale Daten löschen" entfernt importierte Kontextdateien und Browser-Sicherungen aus diesem Browser und stellt anschließend neutrale Demodaten bereit.
+Das Zurücksetzen der Browserdaten entfernt lokale Importe, Kontextdateien, Nutzungsverlauf, Sicherungen und Cache. Danach stehen wieder ausschließlich die acht neutralen Starter-Skills bereit.

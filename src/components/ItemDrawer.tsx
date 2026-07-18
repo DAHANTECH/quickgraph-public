@@ -35,6 +35,7 @@ import type {
   CatalogItem,
   QuickGraphAdapter,
 } from "../domain";
+import { DISTRIBUTION_APP_GALLERY_FILES } from "../data/public-catalog";
 
 interface ItemDrawerProps {
   adapter: QuickGraphAdapter;
@@ -204,35 +205,6 @@ const BRAND_GUIDELINES_SCREENSHOTS: readonly DrawerScreenshot[] = [
     label: "Media-Assets und Gallery Showcase",
   },
 ] as const;
-
-const APP_GALLERY_FILES: Readonly<Record<string, readonly { file: string; label: string }[]>> = {
-  "aura-network-app": [
-    { file: "login", label: "Anmeldung" },
-    { file: "dashboard", label: "Dashboard" },
-    { file: "community", label: "Community" },
-    { file: "academy", label: "Academy" },
-    { file: "admin", label: "Administration" },
-  ],
-  "brunson-hso-app": standardAppGallery("Brunson HSO Copywriter"),
-  "datev-arbeitsliste": standardAppGallery("DATEV-Arbeitsliste"),
-  "fundament-builder": standardAppGallery("Fundament Builder"),
-  "fundament-cockpit": standardAppGallery("Fundament Cockpit"),
-  "funnel-generator": standardAppGallery("Funnel-Generator"),
-  fynestra: standardAppGallery("FYNESTRA"),
-  "kontakte-crm": standardAppGallery("Kontakte CRM"),
-  "openmontage-panel": standardAppGallery("OpenMontage Panel"),
-  "prompt-generator": standardAppGallery("Prompt-Generator"),
-  "quickgraph-katalog": standardAppGallery("QuickGraph Katalog"),
-  "video-dashboard": standardAppGallery("Video-Dashboard"),
-};
-
-function standardAppGallery(name: string): readonly { file: string; label: string }[] {
-  return [
-    { file: "overview", label: `${name}: Übersicht` },
-    { file: "details", label: `${name}: Details` },
-    { file: "workflow", label: `${name}: Workflow` },
-  ];
-}
 
 function drawerWidthBounds(): { min: number; max: number } {
   const viewportWidth = typeof window === "undefined" ? 1_440 : window.innerWidth;
@@ -1087,7 +1059,7 @@ function waitForAppHealthCheck(): Promise<void> {
 
 function screenshotsFor(item: CatalogItem, app?: AppCatalogMetadata | null): readonly DrawerScreenshot[] {
   if (item.kind === "app" && app) {
-    const gallery = APP_GALLERY_FILES[app.id];
+    const gallery = DISTRIBUTION_APP_GALLERY_FILES[app.id];
     if (gallery) {
       return gallery.map(({ file, label }) => ({
         src: `/app-screenshots/${app.id}/${file}.png`,

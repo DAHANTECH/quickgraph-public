@@ -1,6 +1,9 @@
 import { deleteDB, openDB, type DBSchema, type IDBPDatabase } from "idb";
-import demo from "../../data/demo.json";
-import { PUBLIC_CATALOG_ITEMS, PUBLIC_CATALOG_SNAPSHOT_AT } from "../../data/public-catalog";
+import {
+  DISTRIBUTION_DEMO_ITEMS,
+  PUBLIC_CATALOG_ITEMS,
+  PUBLIC_CATALOG_SNAPSHOT_AT,
+} from "../../data/public-catalog";
 import type { CatalogItem, CatalogItemKind, ContextTarget } from "../../domain";
 
 export const QUICKGRAPH_DB_NAME = "quickgraph";
@@ -175,9 +178,15 @@ export async function seedDemoItems(
 ): Promise<void> {
   const seededAt = new Date().toISOString();
   const transaction = database.transaction(["items", "meta"], "readwrite");
-  const items = demo.items as CatalogItem[];
+  const items = DISTRIBUTION_DEMO_ITEMS;
+  const expectedIds = new Set(items.map((item) => item.id));
   const itemStore = transaction.objectStore("items");
 
+  let cursor = await itemStore.openCursor();
+  while (cursor) {
+    if (cursor.value.source === "demo" && !expectedIds.has(cursor.value.id)) await cursor.delete();
+    cursor = await cursor.continue();
+  }
   for (const item of items) {
     if (!(await itemStore.get(item.id))) await itemStore.put(item);
   }
@@ -228,10 +237,10 @@ export async function resetDemoItems(
     if (cursor.value.source === "demo") await cursor.delete();
     cursor = await cursor.continue();
   }
-  for (const item of demo.items as CatalogItem[]) await itemStore.put(item);
+  for (const item of DISTRIBUTION_DEMO_ITEMS) await itemStore.put(item);
   await transaction.objectStore("meta").put({
     key: "bootstrap",
-    value: { source: "neutral-demo", itemCount: demo.items.length, resetAt },
+    value: { source: "neutral-demo", itemCount: DISTRIBUTION_DEMO_ITEMS.length, resetAt },
     updatedAt: resetAt,
   });
   await transaction.done;
@@ -386,7 +395,7 @@ export async function resetBrowserOwnedData(
     transaction.objectStore("meta").clear(),
   ]);
 
-  for (const item of demo.items as CatalogItem[]) {
+  for (const item of DISTRIBUTION_DEMO_ITEMS) {
     await transaction.objectStore("items").put(item);
   }
   for (const item of PUBLIC_CATALOG_ITEMS) {
@@ -394,7 +403,7 @@ export async function resetBrowserOwnedData(
   }
   await transaction.objectStore("meta").put({
     key: "bootstrap",
-    value: { source: "neutral-demo", itemCount: demo.items.length, resetAt },
+    value: { source: "neutral-demo", itemCount: DISTRIBUTION_DEMO_ITEMS.length, resetAt },
     updatedAt: resetAt,
   });
   await transaction.objectStore("meta").put({

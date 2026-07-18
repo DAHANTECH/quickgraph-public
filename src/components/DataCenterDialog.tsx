@@ -15,6 +15,7 @@ import {
   X,
 } from "lucide-react";
 import type { BrowserQuickGraphAdapter } from "../adapters/browser";
+import { DISTRIBUTION_SUPPORTS_DEMO } from "../data/public-catalog";
 import type { BrowserDataMode, CatalogItem, CatalogTransfer, ContextOverview, ContextTarget } from "../domain";
 import type { RuntimeProfile } from "../lib/preferences";
 
@@ -52,16 +53,16 @@ type DirectoryPickerWindow = Window & {
   showDirectoryPicker?: () => Promise<LocalDirectoryHandle>;
 };
 
-const MODE_OPTIONS: ReadonlyArray<{
-  value: BrowserDataMode;
-  label: string;
-  detail: string;
-}> = [
+const MODE_OPTIONS = ([
   { value: "quickgraph", label: "QuickGraph-Daten", detail: "Öffentlicher Katalog + Importe" },
   { value: "demo", label: "Demo", detail: "Neutrale Beispieldaten" },
   { value: "own", label: "Eigene Daten", detail: "Nur lokale Importe" },
   { value: "virgin", label: "Virgin", detail: "Leerer Katalog ohne Löschung" },
-];
+] satisfies ReadonlyArray<{
+  value: BrowserDataMode;
+  label: string;
+  detail: string;
+}>).filter((option) => DISTRIBUTION_SUPPORTS_DEMO || option.value !== "demo");
 
 const MAX_DIRECTORY_FILES = 500;
 
@@ -74,7 +75,9 @@ const DESTRUCTIVE_ACTIONS: Record<DestructiveAction, {
 }> = {
   imports: {
     title: "Alle importierten Katalogeinträge löschen?",
-    detail: "Neutrale Demo-Einträge bleiben erhalten.",
+    detail: DISTRIBUTION_SUPPORTS_DEMO
+      ? "Neutrale Demo-Einträge bleiben erhalten."
+      : "Der neutrale öffentliche Starter-Katalog bleibt erhalten.",
     confirmLabel: "Ja, Importe löschen",
   },
   context: {
@@ -89,7 +92,9 @@ const DESTRUCTIVE_ACTIONS: Record<DestructiveAction, {
   },
   all: {
     title: "Alle Browserdaten zurücksetzen?",
-    detail: "Importe, Kontextdateien, Nutzungsverlauf, Sicherungen und Cache werden gelöscht. Die neutrale Demo wird wiederhergestellt.",
+    detail: DISTRIBUTION_SUPPORTS_DEMO
+      ? "Importe, Kontextdateien, Nutzungsverlauf, Sicherungen und Cache werden gelöscht. Die neutrale Demo wird wiederhergestellt."
+      : "Importe, Kontextdateien, Nutzungsverlauf, Sicherungen und Cache werden gelöscht. Der neutrale Starter-Katalog bleibt erhalten.",
     confirmLabel: "Ja, Browserdaten zurücksetzen",
   },
 };
@@ -326,7 +331,7 @@ export function DataCenterDialog({
       let successMessage: string;
       if (pendingAction === "imports") {
         const deleted = await adapter.deleteImportedCatalogItems();
-        successMessage = `${deleted} importierte ${deleted === 1 ? "Katalogeintrag" : "Katalogeinträge"} gelöscht. Demo-Daten bleiben erhalten.`;
+        successMessage = `${deleted} importierte ${deleted === 1 ? "Katalogeintrag" : "Katalogeinträge"} gelöscht. ${DISTRIBUTION_SUPPORTS_DEMO ? "Demo-Daten" : "Starter-Katalog"} bleibt erhalten.`;
       } else if (pendingAction === "context") {
         const deleted = await adapter.deleteContextFiles();
         successMessage = `${deleted} ${deleted === 1 ? "Kontextdatei" : "Kontextdateien"} gelöscht.`;
@@ -335,8 +340,10 @@ export function DataCenterDialog({
         successMessage = `${deleted} ${deleted === 1 ? "Nutzungseintrag" : "Nutzungseinträge"} gelöscht.`;
       } else {
         await adapter.resetBrowserData();
-        onModeChange("demo");
-        successMessage = "Browserdaten wurden zurückgesetzt. Die neutrale Demo ist wieder verfügbar.";
+        onModeChange(DISTRIBUTION_SUPPORTS_DEMO ? "demo" : "quickgraph");
+        successMessage = DISTRIBUTION_SUPPORTS_DEMO
+          ? "Browserdaten wurden zurückgesetzt. Die neutrale Demo ist wieder verfügbar."
+          : "Browserdaten wurden zurückgesetzt. Der neutrale Starter-Katalog ist wieder verfügbar.";
       }
       await onDataChanged();
       setMessage(successMessage);
@@ -585,7 +592,9 @@ export function DataCenterDialog({
                 <div className="section-heading">
                   <div>
                     <h3 id="maintenance-title">Wartung</h3>
-                    <p>Lokale Sicherung und neutrale Beispieldaten</p>
+                    <p>{DISTRIBUTION_SUPPORTS_DEMO
+                      ? "Lokale Sicherung und neutrale Beispieldaten"
+                      : "Lokale Sicherung und neutraler Starter-Katalog"}</p>
                   </div>
                 </div>
                 <div className="data-actions">
@@ -593,10 +602,12 @@ export function DataCenterDialog({
                     <Download aria-hidden="true" />
                     Browserdaten exportieren
                   </button>
-                  <button className="secondary-button" type="button" disabled={busy} onClick={() => void resetDemo()}>
-                    <RefreshCw aria-hidden="true" />
-                    Demo zurücksetzen
-                  </button>
+                  {DISTRIBUTION_SUPPORTS_DEMO ? (
+                    <button className="secondary-button" type="button" disabled={busy} onClick={() => void resetDemo()}>
+                      <RefreshCw aria-hidden="true" />
+                      Demo zurücksetzen
+                    </button>
+                  ) : null}
                 </div>
               </section>
 

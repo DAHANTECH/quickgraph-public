@@ -1,4 +1,5 @@
 import type { CatalogItem } from "../../domain";
+import { DISTRIBUTION_COMPACT_CATEGORY_LABELS } from "../../data/public-catalog";
 import {
   filterCatalogItemsByFilters,
   isOwnedSkillCatalogItem,
@@ -170,13 +171,13 @@ export function branchOptionsWithItems(
 }
 
 const COMPACT_EXTERNAL_CATEGORY_LABELS: Readonly<Record<string, string>> = {
+  ...DISTRIBUTION_COMPACT_CATEGORY_LABELS,
   "Agent Setup & Optimierung": "Setup",
   "Agent-Steuerung": "Steuerung",
   "Analyse & Visualisierung": "Analyse",
   "Build & Vereinfachung": "Build",
   "Code Debugging": "Debugging",
   "Conversion & Testing": "Conversion",
-  "Desert Greening": "Desert",
   "Design & UX": "Design UX",
   "E-Mail & Kommunikation": "E-Mail",
   "Entscheidung & Strategie": "Strategie",
