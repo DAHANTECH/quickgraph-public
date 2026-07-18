@@ -1,0 +1,67 @@
+{
+  "items": [
+  {
+    "id": "demo-research-brief",
+    "key": "research-brief",
+    "type": "skill",
+    "kind": "skill",
+    "name": "research-brief",
+    "description": "Strukturiert eine Recherche in Ziel, Quellen, offene Fragen und prüfbare Ergebnisse.",
+    "category": "Workflow & Dev",
+    "group": "Skills",
+    "origin": "demo",
+    "source": "demo",
+    "tags": ["Recherche", "Planung"],
+    "content": "# Research Brief\n\nDefiniere Ziel, Quellenlage, Unsicherheiten und gewünschtes Ergebnis.",
+    "invoke": "/research-brief",
+    "updatedAt": "2026-07-12T00:00:00.000Z"
+  },
+  {
+    "id": "demo-copy-review",
+    "key": "copy-review",
+    "type": "skill",
+    "kind": "skill",
+    "name": "copy-review",
+    "description": "Prüft Texte auf Klarheit, Zielgruppenfit, Nutzenversprechen und konkrete nächste Schritte.",
+    "category": "Writing",
+    "group": "Skills",
+    "origin": "demo",
+    "source": "demo",
+    "tags": ["Text", "Review"],
+    "content": "# Copy Review\n\nBewerte Klarheit, Relevanz, Beweisführung und nächste Schritte.",
+    "invoke": "/copy-review",
+    "updatedAt": "2026-07-12T00:00:00.000Z"
+  },
+  {
+    "id": "demo-release-check",
+    "key": "release-check",
+    "type": "workflow",
+    "kind": "workflow",
+    "name": "release-check",
+    "description": "Kompakte Vorabprüfung für Builds, Smokechecks, Rollback und dokumentierte Freigabe.",
+    "category": "Production & QA",
+    "group": "Workflows",
+    "origin": "demo",
+    "source": "demo",
+    "tags": ["QA", "Release"],
+    "content": "# Release Check\n\nPrüfe Build, Tests, Smoke, Backup und Rollback.",
+    "invoke": "/release-check",
+    "updatedAt": "2026-07-12T00:00:00.000Z"
+  },
+  {
+    "id": "demo-project-hub",
+    "key": "project-hub",
+    "type": "app",
+    "kind": "app",
+    "name": "Project Hub",
+    "description": "Neutrales Beispiel für eine lokal indizierte App mit Status und Start-URL.",
+    "category": "Apps",
+    "group": "Apps",
+    "origin": "demo",
+    "source": "demo",
+    "tags": ["React", "Local API"],
+    "content": "Demo-App ohne Zugriff auf lokale Projekte oder persönliche Daten.",
+    "updatedAt": "2026-07-12T00:00:00.000Z"
+  }
+  ]
+}
