@@ -1,0 +1,1 @@
+{ "framework": "vite", "build": { "env": { "VITE_QUICKGRAPH_ADAPTER": "browser" } } }
