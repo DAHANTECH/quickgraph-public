@@ -21,6 +21,7 @@ import {
   FileText,
   GitBranch,
   Grid2X2,
+  Github,
   LayoutGrid,
   Library,
   ListChecks,
@@ -1088,14 +1089,15 @@ export function App({ adapter, onSwitchProfile }: AppProps) {
             ><span aria-hidden="true" />{label}</button>;
           })}
           <button
-            className="icon-button"
+            className="data-center-trigger"
             type="button"
             onClick={() => setDataCenterOpen(true)}
-            title="Data Center öffnen"
+            title="Eigene Daten einbinden oder Demo-Modus wählen"
+            aria-label="Eigene Daten einbinden oder Demo-Modus wählen"
             data-tour="data-center"
           >
             <Database aria-hidden="true" />
-            <span className="sr-only">Data Center öffnen</span>
+            <span>Eigene Daten &amp; Demo</span>
           </button>
           <button
             className="icon-button"
@@ -1121,6 +1123,17 @@ export function App({ adapter, onSwitchProfile }: AppProps) {
             data-tour="report"
           >
             Report<ExternalLink aria-hidden="true" />
+          </a>
+          <a
+            className="header-github-link"
+            href="https://github.com/DAHANTECH/quickgraph-public"
+            rel="noreferrer noopener"
+            target="_blank"
+            title="QuickGraph auf GitHub herunterladen und lokal nutzen"
+            aria-label="QuickGraph auf GitHub herunterladen und lokal nutzen"
+          >
+            <Github aria-hidden="true" />
+            <span>App herunterladen</span>
           </a>
           <button
             className="theme-toggle"

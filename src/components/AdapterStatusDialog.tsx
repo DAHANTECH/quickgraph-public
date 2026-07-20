@@ -139,7 +139,7 @@ export function AdapterStatusDialog({ adapter, health, open, onClose, onOpenData
           </div>
           <p className="adapter-status-purpose">
             <strong>Wofür ist das da?</strong>
-            Der Status zeigt, ob QuickGraph seine aktuelle Datenquelle verwenden kann. Aktualisieren lädt deren Stand neu, ohne Dateien zu verändern.
+            <span>Der Status zeigt, ob QuickGraph seine aktuelle Datenquelle verwenden kann. Aktualisieren lädt deren Stand neu, ohne Dateien zu verändern.</span>
           </p>
         </div>
 
@@ -161,8 +161,8 @@ export function AdapterStatusDialog({ adapter, health, open, onClose, onOpenData
         <details className="adapter-status-details">
           <summary>Technische Details <small>{availableCount} von {CAPABILITY_KEYS.length} Funktionen verfügbar</small></summary>
           <div className="adapter-status-details-content">
-            <p><strong>Datenquelle</strong>{source}</p>
-            <p><strong>Sicherheitsgrenze</strong>{limits}</p>
+            <p><strong>Datenquelle</strong><span>{source}</span></p>
+            <p><strong>Sicherheitsgrenze</strong><span>{limits}</span></p>
             <div className="adapter-capabilities" aria-label="Vollständiger Funktionsumfang">
               {CAPABILITY_KEYS.map((capability) => {
                 const available = operational && adapter.capabilities[capability];
@@ -181,7 +181,7 @@ export function AdapterStatusDialog({ adapter, health, open, onClose, onOpenData
           <p>{refreshResult}</p>
           <div>
             <button className="secondary-button" type="button" onClick={onOpenDataCenter}>
-              <Database aria-hidden="true" /> Data Center
+              <Database aria-hidden="true" /> Daten &amp; Demo
             </button>
             <button className="primary-button" type="button" disabled={refreshing} onClick={() => void refresh()}>
               <RefreshCw aria-hidden="true" /> {refreshing ? "Aktualisiere" : "Aktualisieren"}
